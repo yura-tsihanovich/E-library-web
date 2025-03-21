@@ -11,6 +11,7 @@ import {
 import { useEffect, useState, useRef, useCallback } from "react";
 import { formatDistanceToNow } from "date-fns";
 import ChatSpinner from "../ChatSpinner";
+import { useTranslation } from "react-i18next";
 
 interface NotificationTimeProps {
   sentAt: string | Date;
@@ -33,6 +34,7 @@ const NotificationTime = ({ sentAt }: NotificationTimeProps) => (
 );
 
 const SideDrawer = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isDrawerOpen, notifications, isLoading } = useLazySelector(
     ({ home }) => {
@@ -44,9 +46,6 @@ const SideDrawer = () => {
         isLoading,
       };
     }
-  );
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
   );
 
   const [readNotificationIds, setReadNotificationIds] = useState<string[]>([]);
@@ -139,7 +138,7 @@ const SideDrawer = () => {
         title={
           <div className={styles.header}>
             <span className={styles.notificationsTitle}>
-              {localization?.notifications}
+              {t("notifications")}
               <span style={{ color: "#996C42", paddingLeft: 5 }}>
                 ({notifications?.result?.total || 0})
               </span>

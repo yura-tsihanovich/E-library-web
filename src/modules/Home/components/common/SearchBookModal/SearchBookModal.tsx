@@ -7,9 +7,9 @@ import Search from "../../../../../assets/images/icons/SearchIcon.svg";
 import { routes } from "../../../routing";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../../../core/contexts";
-import { useLazySelector } from "../../../../../hooks";
 import { getLocalization } from "../../../../Auth/slices/auth";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 interface Author {
   name: string;
@@ -43,14 +43,12 @@ const SearchBookModal: FC<NotificationsModalProps> = ({
   booksByQueryName,
   isLoading,
 }) => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const value = useContext(UserContext);
   const dispatch = useDispatch();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -91,12 +89,10 @@ const SearchBookModal: FC<NotificationsModalProps> = ({
     <Modal
       title={
         <div>
-          <div className="custom-modal-title">
-            {localization?.selectBookBtn}
-          </div>
+          <div className="custom-modal-title">{t("selectBookBtn")}</div>
           <div style={{ marginTop: "20px" }}>
             <Input
-              placeholder={localization?.searchPlaceholder}
+              placeholder={t("searchPlaceholder")}
               prefix={<img src={Search} alt="search" />}
               id="search-input"
               value={searchTerm}

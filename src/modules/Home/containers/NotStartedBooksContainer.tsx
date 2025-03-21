@@ -7,8 +7,10 @@ import { routes } from "../routing";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../../core/contexts";
 import { getLocalization } from "../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 const NotStartedBooksContainer: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const value = useContext(UserContext);
@@ -36,10 +38,6 @@ const NotStartedBooksContainer: React.FC = () => {
       isBookshelfNotStarted: true,
     };
   });
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -95,7 +93,7 @@ const NotStartedBooksContainer: React.FC = () => {
     <BooksComponent
       books={notStartedBooksList}
       getBook={getBook}
-      title={localization?.notStarted}
+      title={t("notStarted")}
       onLoadMore={hasMoreBooks ? loadMoreBooks : undefined}
       isLoadingMore={loadingMore}
       hasMoreBooks={hasMoreBooks}

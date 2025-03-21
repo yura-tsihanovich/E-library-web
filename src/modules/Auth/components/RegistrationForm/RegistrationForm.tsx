@@ -7,13 +7,14 @@ import BackIcon from "../../../../assets/images/icons/goBackIcon.svg";
 import Button from "../../../../components/common/Buttons/Button";
 import React from "react";
 import routes from "../../routing/routes";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type LoginFormProps = {
   onSubmit: (values: any) => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const {
     register,
@@ -21,10 +22,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     watch,
     formState: { errors },
   } = useForm();
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const onSubmitForm = (values: any) => {
     console.log("values", values);
@@ -50,7 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           <div />
         </div>
@@ -58,9 +55,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           <div className={commonStyles.login_logo}>
             <img src={logo} alt="logo" />
           </div>
-          <div className={commonStyles.logo_name}>
-            {localization?.createAccount}
-          </div>
+          <div className={commonStyles.logo_name}>{t("createAccount")}</div>
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <div>
               <div className={commonStyles.inputWrapper}>
@@ -72,11 +67,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                   placeholder=""
                   autoComplete="off"
                   {...register("email", {
-                    required: `${localization?.pleaseInputYourEmail}`,
+                    required: t("pleaseInputYourEmail"),
                     pattern: {
                       value:
                         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                      message: `${localization?.errors.pleaseInputYourEmail}`,
+                      message: t("errors.pleaseInputYourEmail"),
                     },
                   })}
                 />
@@ -85,7 +80,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.email ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.email}
+                  {t("email")}
                 </label>
               </div>
               {errors.email && (
@@ -102,14 +97,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                   inputMode="text"
                   placeholder=""
                   {...register("password", {
-                    required: `${localization?.passwordMustBeAtLeast8CharactersLong}`,
+                    required: t("passwordMustBeAtLeast8CharactersLongl"),
                     minLength: {
                       value: 8,
-                      message: `${localization?.passwordMustBeAtLeast8CharactersLong}`,
+                      message: t("passwordMustBeAtLeast8CharactersLong"),
                     },
                     pattern: {
                       value: /^(?=.*[A-Z]).+$/,
-                      message: `${localization?.errors.passwordMustContainAtLeastOneUppercaseLetter}`,
+                      message: t(
+                        "errors.passwordMustContainAtLeastOneUppercaseLetter"
+                      ),
                     },
                   })}
                 />
@@ -118,7 +115,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.password ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.password}
+                  {t("password")}
                 </label>
               </div>
               {errors.password && (
@@ -135,10 +132,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                   inputMode="text"
                   placeholder=""
                   {...register("confirmPassword", {
-                    required: `${localization?.errors.pleaseConfirmYourPassword}`,
+                    required: t("errors.pleaseConfirmYourPasswordl"),
                     validate: (value) =>
-                      value === password ||
-                      `${localization?.errors.passwordsDoNotMatch}`,
+                      value === password || t("errors.passwordsDoNotMatch"),
                   })}
                 />
                 <label
@@ -146,7 +142,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.confirmPassword ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.confirmPassword}
+                  {t("confirmPassword")}
                 </label>
               </div>
               {errors.confirmPassword && (
@@ -156,7 +152,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               )}
             </div>
             <Button variant="White" type="submit">
-              {localization?.createAccount}
+              {t("createAccount")}
             </Button>
           </form>
         </div>
@@ -167,20 +163,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               style={{ marginBottom: "15px" }}
             >
               <div style={{ textAlign: "center" }}>
-                {localization?.byCreatingAnAccountYouAgreeToOur}
+                {t("byCreatingAnAccountYouAgreeToOur")}
                 <Link
                   to={routes.termsAndConditions}
                   style={{ color: "#FFEA84", marginLeft: 8 }}
                 >
-                  {localization?.termsAndConditions}
+                  {t("termsAndConditions")}
                 </Link>
                 <br />
-                {localization?.and}
+                {t("and")}
                 <Link
                   to={routes.privacyPolicy}
                   style={{ color: "#FFEA84", marginLeft: 8 }}
                 >
-                  {localization?.privacyPolicy}
+                  {t("privacyPolicy")}
                 </Link>
               </div>
             </div>

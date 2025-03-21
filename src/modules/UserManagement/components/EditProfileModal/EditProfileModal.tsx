@@ -8,7 +8,7 @@ import Close from "../../../../assets/images/icons/Close.svg";
 import Delete from "../../../../assets/images/icons/delete_icon.svg";
 import EditUpload from "../../../../assets/images/icons/editUploadIcon.svg";
 import commonStyles from "../../../../assets/css/commonStyles/CommonStyles.module.scss";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 interface EditProfileModalProps {
   isModalOpen: boolean;
@@ -44,6 +44,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
   deleteAccount,
   bookLanguage,
 }) => {
+  const { t } = useTranslation();
   const {
     control,
     handleSubmit,
@@ -63,13 +64,9 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
   const profilePicture = watch("photo");
   const uploadRef = useRef<any>(null);
 
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
-
   const genders = [
-    { value: "male", label: localization?.male },
-    { value: "female", label: localization?.female },
+    { value: "male", label: t("male") },
+    { value: "female", label: t("female") },
   ];
 
   useEffect(() => {
@@ -123,9 +120,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
 
   return (
     <Modal
-      title={
-        <div className="custom-modal-title">{localization?.editProfile}</div>
-      }
+      title={<div className="custom-modal-title">{t("editProfile")}</div>}
       visible={isModalOpen}
       onCancel={hideModal}
       className="custom-modal"
@@ -196,7 +191,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                       errors.userName ? styles.errorLabel : ""
                     }`}
                   >
-                    {localization?.name}
+                    {t("name")}
                   </label>
                   {errors.userName && (
                     <p className={styles.errorController}>
@@ -228,9 +223,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                       </option>
                     ))}
                   </select>
-                  <label className={styles.inputLabel}>
-                    {localization?.gender}
-                  </label>
+                  <label className={styles.inputLabel}>{t("gender")}</label>
                   {errors.gender && (
                     <p className={styles.errorController}>
                       {errors.gender.message}
@@ -256,7 +249,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
                   />
                   <label className={styles.inputLabel}>
                     {" "}
-                    {localization?.dateOfBirth}
+                    {t("dateOfBirth")}
                   </label>
                 </>
               )}
@@ -264,7 +257,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
           </div>
         </div>
         <Button variant="Brown" type="submit">
-          {localization?.saveBtn}
+          {t("saveBtn")}
         </Button>
       </form>
       <Button
@@ -274,7 +267,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({
         icon={<img src={Delete} alt="delete-icon" />}
         onClick={deleteAccount}
       >
-        {localization?.deleteAccount}
+        {t("deleteAccount")}
       </Button>
     </Modal>
   );

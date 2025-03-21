@@ -6,7 +6,7 @@ import ForwardS from "../../../../assets/images/icons/forwardS.svg";
 import commonStyles from "../../../../assets/css/commonStyles/CommonStyles.module.scss";
 import BackIcon from "../../../../assets/images/icons/goBackIcon.svg";
 import { useHistory } from "react-router-dom";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 interface AudioBookComponentProps {
   currentAudioBook: any;
@@ -25,15 +25,13 @@ const AudioBookComponent: React.FC<AudioBookComponentProps> = ({
   currentPage,
   setMaxLoadPage,
 }) => {
+  const { t } = useTranslation();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [progress, setProgress] = useState(0);
   const history = useHistory();
   console.log("currentBookVersion", currentBookVersion);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -112,7 +110,7 @@ const AudioBookComponent: React.FC<AudioBookComponentProps> = ({
               className={commonStyles.backBtnRelative}
             >
               <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-              {localization?.backBtn}
+              {t("backBtn")}
             </div>
             <div className={styles.nowPlayingTitle}>Now playing</div>
             <button onClick={toggleSpeed} className={styles.speed_button}>

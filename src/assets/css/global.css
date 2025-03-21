@@ -424,3 +424,10 @@ p {
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
+
+.noneSpinner div:after{
+  opacity: 0 !important;
+}
+.ant-spin-blur {
+  opacity: 1 !important;
+}

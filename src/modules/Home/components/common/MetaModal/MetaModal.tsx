@@ -5,9 +5,7 @@ import commonStyles from "../../../../../assets/css/commonStyles/CommonStyles.mo
 import Close from "../../../../../assets/images/icons/Close.svg";
 import { UserContext } from "../../../../../core/contexts";
 import { useDispatch } from "react-redux";
-import { useLazySelector } from "../../../../../hooks";
 import { getLocalization } from "../../../../Auth/slices/auth";
-// import { useTranslation } from "react-i18next";
 
 interface NotificationsModalProps {
   isModalOpen: boolean;
@@ -22,10 +20,6 @@ const MetaModal: FC<NotificationsModalProps> = ({
 }) => {
   const value = useContext(UserContext);
   const dispatch = useDispatch();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
-  console.log(localization);
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {

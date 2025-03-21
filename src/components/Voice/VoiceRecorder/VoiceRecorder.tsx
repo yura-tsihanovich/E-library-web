@@ -21,7 +21,7 @@ import { CustomButton } from "../Button";
 import SpinMic from "../SpinMic";
 import CustomIcon, { ICON_TYPES } from "../CustomIcon";
 import Button from "../../common/Buttons/Button";
-import { useLazySelector } from "../../../hooks";
+import { useTranslation } from "react-i18next";
 // import {setIsStopQuestion} from "../../../modules/Home/slices/home";
 // import {useDispatch} from "react-redux";
 
@@ -69,9 +69,8 @@ const VoiceRecorder: React.FC<IVoiceRecorder> = ({
   streamDone,
 }) => {
   // const { open } = useNotification();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+
+  const { t } = useTranslation();
   const [recording, setRecording] = useState(false);
   const [paused, setPaused] = useState(false);
   const [recordingUrl] = useState<string | null>(null);
@@ -243,7 +242,7 @@ const VoiceRecorder: React.FC<IVoiceRecorder> = ({
     }
 
     if (!isFirst && !paused) {
-      return localization?.askNow;
+      return t("askNow");
     }
   };
 
@@ -348,7 +347,7 @@ const VoiceRecorder: React.FC<IVoiceRecorder> = ({
                 setIsConnecting(true);
               }}
             >
-              <span>{localization?.talkToAvatar}</span>
+              <span>{t("talkToAvatar")}</span>
 
               <div className={styles.startRecording}>
                 <div
@@ -376,7 +375,7 @@ const VoiceRecorder: React.FC<IVoiceRecorder> = ({
                 <div id="mic" className={styles.stopBtn}></div>
               </div>
               <div style={{ display: "flex" }}>
-                <Tooltip title={localization?.stop} placement="top">
+                <Tooltip title={t("stop")} placement="top">
                   <div>
                     <div
                       className={styles.stopRecording}

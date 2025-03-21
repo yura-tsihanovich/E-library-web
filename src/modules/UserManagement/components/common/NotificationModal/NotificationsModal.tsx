@@ -15,6 +15,7 @@ import { useLazySelector } from "../../../../../hooks";
 import SpinnerBrown from "../../../../../components/common/SpinnerBrown";
 import { UserContext } from "../../../../../core/contexts";
 import { getLocalization } from "../../../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 interface NotificationsModalProps {
   isModalOpen: boolean;
@@ -31,6 +32,7 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -46,10 +48,8 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
     },
   });
   const value = useContext(UserContext);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
-  console.log(localization);
+
+  // console.log(localization);
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -89,9 +89,7 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
 
   return (
     <Modal
-      title={
-        <div className="custom-modal-title">{localization?.notifications}</div>
-      }
+      title={<div className="custom-modal-title">{t("notifications")}</div>}
       visible={isModalOpen}
       onCancel={hideModal}
       className="custom-modal-settings"
@@ -111,7 +109,7 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.kidsSelectWrapper}>
-            <span>{localization?.notificationSettings}</span>
+            <span>{t("notificationSettings")}</span>
             <Controller
               name="startReading"
               control={control}
@@ -122,7 +120,7 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
           </div>
 
           <div className={styles.kidsSelectWrapper}>
-            <span>{localization?.yourBookshelf}</span>
+            <span>{t("yourBookshelf")}</span>
             <Controller
               name="continueReading"
               control={control}
@@ -133,7 +131,7 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
           </div>
 
           <div className={styles.kidsSelectWrapper}>
-            <span>{localization?.yourFavoriteCategory}</span>
+            <span>{t("yourFavoriteCategory")}</span>
             <Controller
               name="newBooks"
               control={control}
@@ -145,7 +143,7 @@ const NotificationsModal: FC<NotificationsModalProps> = ({
 
           <div style={{ textAlign: "right", marginTop: "30px" }}>
             <Button variant="Brown" type="submit">
-              {localization?.saveBtn}
+              {t("saveBtn")}
             </Button>
           </div>
         </form>

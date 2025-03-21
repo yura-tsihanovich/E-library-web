@@ -23,8 +23,8 @@ import Review from "../common/Review/Review";
 import { Skeleton } from "antd";
 import { useDispatch } from "react-redux";
 import { getBookVersion } from "../../slices/home";
-import { useLazySelector } from "../../../../hooks";
 import { getLocalization } from "../../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 type LanguageType = {
   id: number;
@@ -99,13 +99,11 @@ const Book: React.FC<BookProps> = ({
   currentBookVersion,
   startListen,
 }) => {
+  const { t } = useTranslation();
   const [book, setBook] = useState<BookType | null>(null);
   const { id } = useParams<{ id: string }>();
   const value = useContext(UserContext);
   const history = useHistory();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const defaultLanguage = (languages || []).find(
     (lang) => lang.name === "English"
@@ -307,7 +305,7 @@ const Book: React.FC<BookProps> = ({
         className={styles.backBtnRelativePage}
       >
         <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-        {localization?.backBtn}
+        {t("backBtn")}
       </div>
       <div className={styles.home_page}>
         <div className={styles.flex_wrap}>
@@ -353,13 +351,11 @@ const Book: React.FC<BookProps> = ({
                       src={HabitIcon}
                       alt="icon"
                     />
-                    {category?.name &&
-                    localization &&
-                    localization[`category${category.name}`]
-                      ? localization[`category${category.name}`]
-                      : category?.name ||
-                        localization?.categoryNotFound ||
-                        "Category not found"}
+                    {category?.name
+                      ? t(`category${category.name}`, {
+                          defaultValue: category?.name || t("categoryNotFound"),
+                        })
+                      : t("categoryNotFound")}
                   </div>
                 ))}
               </div>
@@ -463,7 +459,7 @@ const Book: React.FC<BookProps> = ({
               variant="Brown"
               type="submit"
             >
-              {localization?.readNowBtn}
+              {t("readNowBtn")}
             </Button>
             <div className={styles.btns_block}>
               <Button
@@ -479,7 +475,7 @@ const Book: React.FC<BookProps> = ({
                 }}
                 icon={<img src={ListenIcon} alt="icon" />}
               >
-                {localization?.listen}
+                {t("listen")}
               </Button>
               <div className={styles.divider} />
               <Button
@@ -494,13 +490,13 @@ const Book: React.FC<BookProps> = ({
                 variant="Transparent"
                 icon={<img src={Question} alt="icon" />}
               >
-                {localization?.AskQuestionBtn}
+                {t("AskQuestionBtn")}
               </Button>
             </div>
             <section className={styles.bookDescription}>
               <div className={styles.description}>
                 <div className={styles.section_title}>
-                  {localization?.bookDescriptionBtn}
+                  {t("bookDescriptionBtn")}
                 </div>
                 <p>
                   <div>{currentBookVersion?.result?.data[0]?.description}</div>
@@ -509,7 +505,7 @@ const Book: React.FC<BookProps> = ({
               <div className={styles.mobileView}>
                 <div className={styles.age_row}>
                   <img style={{ marginRight: "5px" }} src={Group} alt="icon" />
-                  {localization?.ageLimit}
+                  {t("ageLimit")}
                 </div>
                 <div
                   style={{
@@ -531,13 +527,12 @@ const Book: React.FC<BookProps> = ({
                         src={HabitIcon}
                         alt="icon"
                       />
-                      {category?.name &&
-                      localization &&
-                      localization[`category${category.name}`]
-                        ? localization[`category${category.name}`]
-                        : category?.name ||
-                          localization?.categoryNotFound ||
-                          "Category not found"}
+                      {category?.name
+                        ? t(`category${category.name}`, {
+                            defaultValue:
+                              category?.name || t("categoryNotFound"),
+                          })
+                        : t("categoryNotFound")}
                     </div>
                   ))}
                 </div>
@@ -570,7 +565,7 @@ const Book: React.FC<BookProps> = ({
                     alt="download icon"
                     style={{ marginRight: "8px" }}
                   />
-                  {localization?.downloadBtn}
+                  {t("downloadBtn")}
                   <div
                     style={{
                       background: "rgba(153, 108, 66, 0.1)",
@@ -589,9 +584,7 @@ const Book: React.FC<BookProps> = ({
               )}
             </section>
             <section className={styles.reviewsSection}>
-              <div className={styles.section_title}>
-                {localization?.reviews}
-              </div>
+              <div className={styles.section_title}>{t("reviews")}</div>
               <div className={styles.overallRating}>
                 {book?.rating !== undefined && (
                   <Rating
@@ -608,7 +601,7 @@ const Book: React.FC<BookProps> = ({
                   {book?.rating ? Number(book.rating).toFixed(1) : "N/A"}
                 </div>
                 <span>
-                  ({book?.reviewCount} {localization?.reviews.toLowerCase()})
+                  ({book?.reviewCount} {t("reviews").toLowerCase()})
                 </span>
               </div>
               {reviews.length > 0 ? (
@@ -624,7 +617,7 @@ const Book: React.FC<BookProps> = ({
                   />
                 ))
               ) : (
-                <p>{localization?.noReviewsAvailable}</p>
+                <p>{t("noReviewsAvailable")}</p>
               )}
               <Button
                 style={{
@@ -638,7 +631,7 @@ const Book: React.FC<BookProps> = ({
                 }}
                 variant="Transparent"
               >
-                {localization?.writeReviewBtn}
+                {t("writeReviewBtn")}
                 <img
                   style={{ marginLeft: "10px" }}
                   src={ReviewIcon}
@@ -649,7 +642,7 @@ const Book: React.FC<BookProps> = ({
             <section>
               <PageBooksList
                 books={similarBooks}
-                title={localization?.titleSimilarBooks}
+                title={t("titleSimilarBooks")}
                 seeAllLink={routes.similarBooks}
                 getBook={getBook}
               />

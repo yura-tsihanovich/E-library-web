@@ -8,14 +8,13 @@ import { useHistory } from "react-router-dom";
 import booksImg from "../../../assets/images/icons/booksIcon.png";
 import { UserContext } from "../../../core/contexts";
 import { getLocalization } from "../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 const NewBooksContainer: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const value = useContext(UserContext);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const authState = useLazySelector(({ auth }) => {
     return auth;
@@ -95,7 +94,7 @@ const NewBooksContainer: React.FC = () => {
       getBook={getBook}
       title={
         <>
-          {localization?.titleNewBooks} <img src={booksImg} alt="books" />
+          {t("titleNewBooks")} <img src={booksImg} alt="books" />
         </>
       }
       onLoadMore={hasMoreBooks ? loadMoreBooks : undefined}

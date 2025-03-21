@@ -8,8 +8,8 @@ import Rating from "react-rating-stars-component";
 import { UserContext } from "../../../../../core/contexts";
 import { BookType } from "../../Book/Book";
 import { useDispatch } from "react-redux";
-import { useLazySelector } from "../../../../../hooks";
 import { getLocalization } from "../../../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 interface ReviewModalProps {
   isModalOpen: boolean;
@@ -24,14 +24,12 @@ const ReviewModal: FC<ReviewModalProps> = ({
   book,
   reviewSubmit,
 }) => {
+  const { t } = useTranslation();
   const [reviewText, setReviewText] = useState<string>("");
   const [rating, setRating] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const value = useContext(UserContext);
   const dispatch = useDispatch();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -64,9 +62,7 @@ const ReviewModal: FC<ReviewModalProps> = ({
 
   return (
     <Modal
-      title={
-        <div className="custom-modal-title">{localization?.writeReviewBtn}</div>
-      }
+      title={<div className="custom-modal-title">{t("writeReviewBtn")}</div>}
       visible={isModalOpen}
       onCancel={hideModal}
       className="custom-modal"
@@ -80,7 +76,7 @@ const ReviewModal: FC<ReviewModalProps> = ({
       }
     >
       <textarea
-        placeholder={localization?.placeholderYourReview}
+        placeholder={t("placeholderYourReview")}
         value={reviewText}
         onChange={(e) => {
           setReviewText(e.target.value);
@@ -104,9 +100,7 @@ const ReviewModal: FC<ReviewModalProps> = ({
       <div
         style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}
       >
-        <span style={{ marginRight: "8px" }}>
-          {localization?.rating.toLowerCase()}:
-        </span>
+        <span style={{ marginRight: "8px" }}>{t("rating").toLowerCase()}:</span>
         <Rating
           count={5}
           value={rating}
@@ -137,7 +131,7 @@ const ReviewModal: FC<ReviewModalProps> = ({
             fontSize: "16px",
           }}
         >
-          {localization?.submit}
+          {t("submit")}
         </Button>
       </div>
     </Modal>

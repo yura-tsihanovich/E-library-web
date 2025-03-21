@@ -5,7 +5,7 @@ import BackIcon from "../../../../assets/images/icons/goBackIcon.svg";
 import { useHistory } from "react-router-dom";
 import Button from "../../../../components/common/Buttons/Button";
 import { useForm, Controller } from "react-hook-form";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type RecoverProps = {
   onSubmit: (values: any) => void;
@@ -26,13 +26,11 @@ const ProfileAboutForm: React.FC<RecoverProps> = ({
   onSubmit,
   aboutOptions = [],
 }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { handleSubmit, control, register, watch } = useForm();
 
   const isFreeTextSelected = watch("option_15", false);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const categories = (aboutOptions || []).reduce((acc, option) => {
     if (!acc[option.category]) {
@@ -72,7 +70,7 @@ const ProfileAboutForm: React.FC<RecoverProps> = ({
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           {/*<div*/}
           {/*  onClick={() => history.push(homeRoutes.root)}*/}
@@ -87,11 +85,9 @@ const ProfileAboutForm: React.FC<RecoverProps> = ({
           {/*</div>*/}
         </div>
         <div className={styles.centered}>
-          <div className={styles.logo_name}>
-            {localization?.howDidYouLearnAbout}
-          </div>
+          <div className={styles.logo_name}>{t("howDidYouLearnAbout")}</div>
           <div className={styles.subtitle_name}>
-            {localization?.selectMultipleOptions}
+            {t("selectMultipleOptions")}
           </div>
           <div className={styles.formBlock}>
             {Object.entries(categories).map(([category, items]) => (
@@ -142,7 +138,7 @@ const ProfileAboutForm: React.FC<RecoverProps> = ({
               </div>
             )}
             <Button variant="White" type="submit">
-              {localization?.continueBtn}
+              {t("continueBtn")}
             </Button>
           </div>
         </div>

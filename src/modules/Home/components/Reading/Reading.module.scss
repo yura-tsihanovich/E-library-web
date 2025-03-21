@@ -267,6 +267,26 @@
   width: 136px;
 }
 
+.listWrapper {
+  &:after{
+    display: none !important;
+  }
+
+  .listItem {
+    height: 100% !important;
+    overflow: hidden !important;
+    & > div {
+      flex: 1;
+    }
+    & > div > * {
+      min-height: 90vh;
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+  }
+}
+
+
 //.progressLine {
 //  width: 100%;
 //  height: 10px;

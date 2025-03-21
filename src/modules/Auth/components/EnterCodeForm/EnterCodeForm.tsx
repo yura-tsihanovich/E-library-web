@@ -6,7 +6,7 @@ import Onboarding from "../../../../assets/images/Onboarding-img.png";
 import { useForm } from "react-hook-form";
 import Button from "../../../../components/common/Buttons/Button";
 import React from "react";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type RecoverProps = {
   onSubmit: (values: any) => void;
@@ -19,6 +19,7 @@ const EnterCodeForm: React.FC<RecoverProps> = ({
   currentEmail,
   onResendCode,
 }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { register, handleSubmit, watch, setValue } = useForm();
   const code = watch([
@@ -29,9 +30,6 @@ const EnterCodeForm: React.FC<RecoverProps> = ({
     "digit5",
     "digit6",
   ]);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -94,16 +92,14 @@ const EnterCodeForm: React.FC<RecoverProps> = ({
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           <div />
         </div>
         <div className={commonStyles.centered}>
-          <div className={styles.logo_code_name}>
-            {localization?.enterDigitCode}
-          </div>
+          <div className={styles.logo_code_name}>{t("enterDigitCode")}</div>
           <div className={styles.code_subtitle}>
-            {localization?.sentCodeTo}
+            {t("sentCodeTo")}
             {currentEmail}
           </div>
           <form
@@ -131,14 +127,14 @@ const EnterCodeForm: React.FC<RecoverProps> = ({
               ))}
             </div>
             <Button type="submit" variant="White">
-              {localization?.submit}
+              {t("submit")}
             </Button>
           </form>
         </div>
         <div className={commonStyles.footerCentered}>
           <div>
             <div className={commonStyles.login_subtitle}>
-              {localization?.DidntReceiveCode}
+              {t("DidntReceiveCode")}
               <div
                 style={{
                   color: "#FFEA84",

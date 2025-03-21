@@ -7,8 +7,10 @@ import { useHistory } from "react-router-dom";
 import BooksComponent from "../components/AllBooksComponents/BooksComponent";
 import { UserContext } from "../../../core/contexts";
 import { getLocalization } from "../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 const SuggestedBooksContainer: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -36,10 +38,6 @@ const SuggestedBooksContainer: React.FC = () => {
       dispatch(getLocalization(value?.language?.isoCode2char));
     }
   }, [dispatch, value?.language?.isoCode2char]);
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const limit = 6;
 
@@ -107,7 +105,7 @@ const SuggestedBooksContainer: React.FC = () => {
     <BooksComponent
       books={suggestedBooks?.result?.data}
       getBook={getBook}
-      title={localization?.titleSuggestedForYou}
+      title={t("titleSuggestedForYou")}
       onLoadMore={hasMoreBooks ? loadMoreBooks : undefined}
       isLoadingMore={loadingMore}
       hasMoreBooks={hasMoreBooks}

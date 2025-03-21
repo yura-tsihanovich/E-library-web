@@ -31,6 +31,7 @@ import { UserContext } from "../../../../core/contexts";
 import silentAvatar from "../../../../assets/videos/silent.mp4";
 import { useLazySelector } from "../../../../hooks";
 import { getLocalization } from "../../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 // import {useSocket} from "../../../../hooks/useSocket";
 
 type Chat = {
@@ -92,6 +93,7 @@ const AskQuestionComponent: React.FC<AskQuestionComponentProps> = ({
   indexName,
   isChooseAvatarPage,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const value = useContext(UserContext);
   const { register, handleSubmit, reset, setValue } = useForm<FormValues>();
@@ -115,9 +117,7 @@ const AskQuestionComponent: React.FC<AskQuestionComponentProps> = ({
   const [isFirst, setIsFirst] = useState(true);
   const [isEmpty, setIsEmpty] = useState(true);
   const [voiceChatHistory, setVoiceChatHistory] = useState<any>([]);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+
   console.log("chatHistory", chatHistory);
   console.log("voiceChatHistory", voiceChatHistory);
 
@@ -456,7 +456,7 @@ const AskQuestionComponent: React.FC<AskQuestionComponentProps> = ({
           <div className={styles.bookTitle}>
             <div style={{ marginRight: 10 }}>
               {location.pathname.includes("ask_global_question")
-                ? localization?.askGlobalTitle
+                ? t("askGlobalTitle")
                 : title}
             </div>
             <div
@@ -613,7 +613,7 @@ const AskQuestionComponent: React.FC<AskQuestionComponentProps> = ({
                     {...register("question", { required: true })}
                     type="text"
                     className={styles.chatInput}
-                    placeholder={localization?.questionPlaceholder}
+                    placeholder={t("questionPlaceholder")}
                     autoComplete="off"
                     onKeyDown={handleKeyDown}
                     onInput={(e) => setIsEmpty(e.currentTarget.value === "")}

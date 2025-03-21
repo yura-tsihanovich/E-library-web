@@ -4,7 +4,7 @@ import AllBooksSlider from "../common/AllBooksSlider/AllBooksSlider";
 import { routes } from "../../routing";
 import EmptyImg from "../../../../assets/images/emptyImg.jpg";
 import Button from "../../../../components/common/Buttons/Button";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type HomeProps = {
   started: any;
@@ -27,9 +27,7 @@ const BooksShelfComponent: React.FC<HomeProps> = ({
   isNotStartedBooksLoading,
   isFinishedBooksLoading,
 }) => {
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+  const { t } = useTranslation();
 
   const isEmptyShelf =
     (!started || started.length === 0) &&
@@ -45,7 +43,7 @@ const BooksShelfComponent: React.FC<HomeProps> = ({
               books={started}
               title={
                 <span style={{ fontSize: "44px", fontWeight: "600" }}>
-                  {localization?.started}
+                  {t("started")}
                 </span>
               }
               seeAllLink={routes.startedBooks}
@@ -59,7 +57,7 @@ const BooksShelfComponent: React.FC<HomeProps> = ({
               books={notStarted}
               title={
                 <span style={{ fontSize: "44px", fontWeight: "600" }}>
-                  {localization?.notStarted}
+                  {t("notStarted")}
                 </span>
               }
               seeAllLink={routes.notStartedBooks}
@@ -73,7 +71,7 @@ const BooksShelfComponent: React.FC<HomeProps> = ({
               books={finished}
               title={
                 <span style={{ fontSize: "44px", fontWeight: "600" }}>
-                  {localization?.finished}
+                  {t("finished")}
                 </span>
               }
               seeAllLink={routes.finishedBooks}
@@ -90,14 +88,10 @@ const BooksShelfComponent: React.FC<HomeProps> = ({
             <div className={styles.innerImg}>
               <img src={EmptyImg} alt="empty" />
             </div>
-            <div className={styles.title}>
-              {localization?.YourBookshelfEmpty}
-            </div>
-            <div className={styles.subTitle}>
-              {localization?.ExploreLibraryNow}
-            </div>
+            <div className={styles.title}>{t("YourBookshelfEmpty")}</div>
+            <div className={styles.subTitle}>{t("ExploreLibraryNow")}</div>
             <Button variant="Brown" to={routes.root}>
-              {localization?.StartExploring}
+              {t("StartExploring")}
             </Button>
           </div>
         </div>

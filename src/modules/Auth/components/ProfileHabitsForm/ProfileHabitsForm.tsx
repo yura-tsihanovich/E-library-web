@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ProfileHabitsForm.module.scss";
 import { useForm, Controller } from "react-hook-form";
 import Button from "../../../../components/common/Buttons/Button";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type FormValues = {
   categories: {
@@ -30,10 +30,8 @@ const ProfileHabitsForm: React.FC<RecoverProps> = ({
   categoriesData = [],
   habits,
 }) => {
+  const { t } = useTranslation();
   const habitIds = new Set(habits?.map((habit: any) => habit.id));
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const { handleSubmit, control, watch } = useForm<FormValues>({
     defaultValues: {
@@ -59,9 +57,7 @@ const ProfileHabitsForm: React.FC<RecoverProps> = ({
   return (
     <div className={styles.habitPageContainer}>
       <div />
-      <div className={styles.habit_title}>
-        {localization?.chooseYourReadingHabits}
-      </div>
+      <div className={styles.habit_title}>{t("chooseYourReadingHabits")}</div>
       <div className={styles.habit_wrap}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className={styles.grid_container}>
@@ -139,7 +135,7 @@ const ProfileHabitsForm: React.FC<RecoverProps> = ({
           </div>
           <div className={styles.btnWrap}>
             <Button variant="Brown" type="submit">
-              {localization?.continueBtn} ({selectedCount})
+              {t("continueBtn")} ({selectedCount})
             </Button>
           </div>
         </form>

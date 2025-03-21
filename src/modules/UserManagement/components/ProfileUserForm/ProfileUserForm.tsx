@@ -7,6 +7,7 @@ import LanguageModal from "../../../Auth/components/LanguageModal";
 import { Switch } from "antd";
 import NotificationsModal from "../common/NotificationModal/NotificationsModal";
 import { UserContext } from "../../../../core/contexts";
+import { useTranslation } from "react-i18next";
 
 export type LanguageType = {
   id: number;
@@ -27,7 +28,6 @@ type RecoverProps = {
   language?: LanguageType;
   handleAppLanguage: any;
   handleBookLanguage: any;
-  localization: any;
   isChangeKidsMode?: boolean;
 };
 
@@ -50,9 +50,9 @@ const ProfileUserForm: React.FC<RecoverProps> = ({
   language,
   handleAppLanguage,
   handleBookLanguage,
-  localization,
   isChangeKidsMode,
 }) => {
+  const { t } = useTranslation();
   const defaultLanguage = languages.find((lang) => lang.name === "English") || {
     id: 0,
     name: "English",
@@ -175,9 +175,7 @@ const ProfileUserForm: React.FC<RecoverProps> = ({
                   </div>
                 )}
               />
-              <label className={styles.inputLabel}>
-                {localization?.appLanguage}
-              </label>
+              <label className={styles.inputLabel}>{t("appLanguage")}</label>
             </div>
           )}
         </div>
@@ -207,16 +205,14 @@ const ProfileUserForm: React.FC<RecoverProps> = ({
                   </div>
                 )}
               />
-              <label className={styles.inputLabel}>
-                {localization?.bookLanguage}
-              </label>
+              <label className={styles.inputLabel}>{t("bookLanguage")}</label>
             </div>
           )}
         </div>
 
         {/* Kids Mode */}
         <div className={styles.kidsSelectWrapper}>
-          <span>{localization?.kidsMode}</span>
+          <span>{t("kidsMode")}</span>
           <Switch
             checked={userKidsMode}
             disabled={isChangeKidsMode}
@@ -232,7 +228,7 @@ const ProfileUserForm: React.FC<RecoverProps> = ({
             setIsNotificationsModalOpen(true);
           }}
         >
-          <span>{localization?.notificationSettings}</span>
+          <span>{t("notificationSettings")}</span>
         </div>
 
         {/* AI Librarian */}
@@ -252,7 +248,7 @@ const ProfileUserForm: React.FC<RecoverProps> = ({
               alt="avatar"
             />
           </div>
-          <span>{localization?.aILibrarian}</span>
+          <span>{t("aILibrarian")}</span>
         </div>
       </form>
 

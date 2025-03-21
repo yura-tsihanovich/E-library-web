@@ -12,8 +12,10 @@ import {
   setCurrentCategoryId,
 } from "../slices/home";
 import { UserContext } from "../../../core/contexts";
+import { useTranslation } from "react-i18next";
 
 const SearchContainer: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const value = useContext(UserContext);
@@ -28,10 +30,6 @@ const SearchContainer: React.FC = () => {
   const authState = useLazySelector(({ auth }) => {
     return auth;
   });
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -95,7 +93,7 @@ const SearchContainer: React.FC = () => {
   const translatedCategories = categories?.result?.data?.map(
     (category: any) => ({
       ...category,
-      name: localization?.[category.name] || category.name, // Используем localization напрямую
+      name: t(category.name) || category.name, // Используем localization напрямую
     })
   );
 

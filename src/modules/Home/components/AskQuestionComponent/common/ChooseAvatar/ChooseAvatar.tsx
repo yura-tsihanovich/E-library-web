@@ -7,7 +7,7 @@ import Button from "../../../../../../components/common/Buttons/Button";
 import Spinner from "../../../../../../components/common/Spinner";
 import { routes as profileRoutes } from "../../../../../UserManagement/routing";
 import { useHistory } from "react-router-dom";
-import { useLazySelector } from "../../../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 interface AvatarData {
   id: number;
@@ -45,10 +45,8 @@ const ChooseAvatar: FC<ChooseAvatarProps> = ({
   setCurrentImage,
   isChooseAvatarPage,
 }) => {
+  const { t } = useTranslation();
   const history = useHistory();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const settings = {
     infinite: true,
@@ -120,16 +118,16 @@ const ChooseAvatar: FC<ChooseAvatarProps> = ({
           ))}
         </Slider>
         <div className={styles.gratisBlock}>
-          {localization?.helloAvatar1}
-          <br /> {localization?.helloAvatar2}
+          {t("helloAvatar1")}
+          <br /> {t("helloAvatar2")}
         </div>
-        <div className={styles.subTitle}>{localization?.avatarLook}</div>
+        <div className={styles.subTitle}>{t("avatarLook")}</div>
         <Button
           onClick={handleNextStep}
           style={{ width: "341px", margin: "20px auto 20px" }}
           variant="Brown"
         >
-          {localization?.chooseBtn} {currentImage.name}
+          {t("chooseBtn")} {currentImage.name}
         </Button>
       </div>
     </div>

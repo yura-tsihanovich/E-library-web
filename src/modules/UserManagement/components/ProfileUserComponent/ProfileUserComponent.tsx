@@ -11,7 +11,7 @@ import { logoutUser } from "../../../../core/session/slices/session";
 import { useDispatch } from "react-redux";
 import EditProfileModal from "../EditProfileModal";
 import noAvatar from "../../../../assets/images/icons/noUserAvatar.png";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 interface ProfileUserComponentProps {
   languages: LanguageType[];
@@ -36,9 +36,8 @@ const ProfileUserComponent: FC<ProfileUserComponentProps> = ({
   handleAppLanguage,
   handleBookLanguage,
 }) => {
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+  const { t } = useTranslation();
+
   const value = useContext(UserContext);
   const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -97,11 +96,10 @@ const ProfileUserComponent: FC<ProfileUserComponentProps> = ({
               style={{ marginLeft: 14, display: "flex", alignItems: "center" }}
             >
               <img style={{ marginRight: 4 }} src={SmallBook} alt="book" />
-              {value?.completedBooks} {localization?.completedBooks}
+              {value?.completedBooks} {t("completedBooks")}
             </div>
           </div>
           <ProfileUserForm
-            localization={localization}
             languages={languages}
             onSubmit={onSubmit}
             handleKidsMode={handleKidsMode}
@@ -116,7 +114,7 @@ const ProfileUserComponent: FC<ProfileUserComponentProps> = ({
         </div>
         <div onClick={onLogout} className={styles.logOutBtn}>
           <img src={LogOut} alt="icon" />
-          {localization?.logOut}
+          {t("logOut")}
         </div>
       </div>
       <EditProfileModal

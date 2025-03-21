@@ -9,6 +9,7 @@ import { useLazySelector } from "../../../../../../hooks";
 import { getCategories } from "../../../../../Auth/slices/auth";
 import { findBooks, getBooksByQueryName } from "../../../../slices/home";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 interface ChooseAvatarStep2Props {
   setCurrentStep: (value: number) => void;
@@ -19,10 +20,9 @@ const ChooseAvatarStep4: FC<ChooseAvatarStep2Props> = ({
   setCurrentStep,
   selectedAvatar,
 }) => {
+  const { t } = useTranslation();
   const location = useLocation();
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isGlobalQuestion = location.pathname.includes("ask_global_question");
 
@@ -66,15 +66,13 @@ const ChooseAvatarStep4: FC<ChooseAvatarStep2Props> = ({
           style={{ backgroundImage: `url(${selectedAvatar})` }}
         ></div>
         <div className={styles.messageSystemContent}>
-          <strong style={{ color: "#fff" }}>
-            {localization?.avatarExamples1}
-          </strong>
+          <strong style={{ color: "#fff" }}>{t("avatarExamples1")}</strong>
           <br />
-          {localization?.avatarExamples2}
+          {t("avatarExamples2")}
           <br />
-          {localization?.avatarExamples3}
+          {t("avatarExamples3")}
           <br />
-          {localization?.avatarExamples4}
+          {t("avatarExamples4")}
         </div>
 
         {isGlobalQuestion ? (
@@ -86,7 +84,7 @@ const ChooseAvatarStep4: FC<ChooseAvatarStep2Props> = ({
               style={{ width: "341px", margin: "30px auto 20px" }}
               variant="Brown"
             >
-              {localization?.selectBookBtn}
+              {t("selectBookBtn")}
             </Button>
             <Button
               onClick={() => {
@@ -95,7 +93,7 @@ const ChooseAvatarStep4: FC<ChooseAvatarStep2Props> = ({
               style={{ width: "341px", margin: "30px auto 20px" }}
               variant="White"
             >
-              {localization?.searchInAllBooksBtn}
+              {t("searchInAllBooksBtn")}
             </Button>
           </>
         ) : (

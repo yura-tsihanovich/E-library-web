@@ -7,14 +7,13 @@ import { routes } from "../routing";
 import { useHistory, useParams } from "react-router-dom";
 import { UserContext } from "../../../core/contexts";
 import { getLocalization } from "../../Auth/slices/auth";
+import { useTranslation } from "react-i18next";
 
 const SearchNewBooksContainer: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const value = useContext(UserContext);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -85,7 +84,7 @@ const SearchNewBooksContainer: React.FC = () => {
     <BooksComponent
       books={newBooks?.result?.data}
       getBook={getBook}
-      title={localization?.titleTopBooks}
+      title={t("titleTopBooks")}
       onLoadMore={hasMoreBooks ? loadMoreBooks : undefined}
       isLoadingMore={loadingMore}
       hasMoreBooks={hasMoreBooks}

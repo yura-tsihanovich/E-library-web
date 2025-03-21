@@ -361,5 +361,16 @@
   background-position: top 50% right 31px !important;
 }
 
+.modalHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+.selectLangModalHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
+}

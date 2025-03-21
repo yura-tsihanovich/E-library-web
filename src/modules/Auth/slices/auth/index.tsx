@@ -21,7 +21,7 @@ import {
   setUserAvatar,
   getSurveyOptions,
   setRegistrationOptionsAbout,
-  getAppLocalization,
+  // getAppLocalization,
   resendConfirmation,
 } from "../../api/authService";
 import {
@@ -194,8 +194,8 @@ const authSlice = createSlice({
         state.appLocalization = { isLoading: true };
       })
       .addCase(getLocalization.fulfilled, (state, action) => {
-        const { content, error } = action.payload;
-        state.appLocalization = { isLoading: false, result: content, error };
+        // const { content, error } = action.payload;
+        // state.appLocalization = { isLoading: false, result: content, error };
       })
 
       .addCase(userLoggedOut, () => initialState);
@@ -362,8 +362,11 @@ export const getMe = createAsyncThunk("api/v1/auth/me", async () => {
 export const getLocalization = createAsyncThunk(
   "/api/v1/localization/web/",
   async (lang: string) => {
-    const response = await getAppLocalization(lang);
-    return response;
+    // const response = await getAppLocalization(lang);
+
+    localStorage.setItem("i18nextLng", lang);
+
+    return {};
   }
 );
 

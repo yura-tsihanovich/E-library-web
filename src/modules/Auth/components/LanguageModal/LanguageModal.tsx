@@ -4,7 +4,8 @@ import { Input, Modal } from "antd";
 import Search from "../../../../assets/images/icons/SearchIcon.svg";
 import Button from "../../../../components/common/Buttons/Button";
 import { FC, useEffect, useState } from "react";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 
 interface LanguageModalProps {
   isModalOpen: any;
@@ -30,6 +31,7 @@ interface LanguageModalProps {
 type LanguageType = {
   id: number;
   name: string;
+  isoCode2char: string;
   flag: {
     link: string;
   };
@@ -43,6 +45,7 @@ const LanguageModal: FC<LanguageModalProps> = ({
   defaultLanguage,
   onLanguageSelect,
 }) => {
+  const { t } = useTranslation();
   const initialLanguage = currentSelectedLanguage
     ? currentSelectedLanguage
     : defaultLanguage;
@@ -58,14 +61,22 @@ const LanguageModal: FC<LanguageModalProps> = ({
     setSelectedLanguage(currentSelectedLanguage || defaultLanguage);
   }, [currentSelectedLanguage, defaultLanguage]);
 
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
-
-  const handleLanguageSelect = (lang: LanguageType) => {
+  const handleLanguageSelect = async (lang: LanguageType) => {
     setSelectedLanguage(lang);
     onLanguageSelect(lang);
     hideModal();
+  };
+
+  const handleChangeAppLang = async (lang: LanguageType) => {
+    try {
+      await i18next.changeLanguage(lang.isoCode2char);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setSelectedLanguage(lang);
+      onLanguageSelect(lang);
+      hideModal();
+    }
   };
 
   const filteredLanguages = languages?.filter((lang: LanguageType) =>
@@ -74,15 +85,18 @@ const LanguageModal: FC<LanguageModalProps> = ({
 
   return (
     <Modal
-      title={<div className="custom-modal-title">{localization?.password}</div>}
+      title={
+        <div className={commonStyles.selectLangModalHeader}>
+          <div className="custom-modal-title">{t("selectLanguage")}</div>
+          <img src={Close} alt="close" />
+        </div>
+      }
       visible={isModalOpen}
       onOk={hideModal}
       onCancel={hideModal}
       className="custom-modal"
       footer={null}
-      closeIcon={
-        <img className={commonStyles.modalCloseIcon} src={Close} alt="close" />
-      }
+      closable={false}
     >
       <Input
         placeholder="Search"
@@ -167,7 +181,7 @@ const LanguageModal: FC<LanguageModalProps> = ({
                 className={`${commonStyles.languageItem} ${
                   lang.name === selectedLanguage.name ? commonStyles.active : ""
                 }`}
-                onClick={() => handleLanguageSelect(lang)}
+                onClick={() => handleChangeAppLang(lang)}
               >
                 <div
                   className={commonStyles.flagIcon}
@@ -177,7 +191,7 @@ const LanguageModal: FC<LanguageModalProps> = ({
                     backgroundPosition: "center",
                     backgroundSize: "140%",
                   }}
-                ></div>
+                />
                 <span style={{ paddingLeft: 22 }}>{lang.name}</span>
               </div>
             ))}
@@ -187,7 +201,7 @@ const LanguageModal: FC<LanguageModalProps> = ({
 
       <div style={{ textAlign: "right" }}>
         <Button variant="Brown" onClick={hideModal}>
-          Close
+          {t("backBtn")}
         </Button>
       </div>
     </Modal>

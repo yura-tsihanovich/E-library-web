@@ -6,23 +6,20 @@ import logo from "../../../../assets/images/icons/logo.svg";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import React from "react";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type RecoverProps = {
   onSubmit: (email: VerifyData) => void;
 };
 
 const RecoverPasswordForm: React.FC<RecoverProps> = ({ onSubmit }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const onSubmitForm = (values: any) => {
     onSubmit(values);
@@ -44,7 +41,7 @@ const RecoverPasswordForm: React.FC<RecoverProps> = ({ onSubmit }) => {
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           <div />
         </div>
@@ -53,11 +50,10 @@ const RecoverPasswordForm: React.FC<RecoverProps> = ({ onSubmit }) => {
             <img src={logo} alt="logo" />
           </div>
           <div className={commonStyles.recover_name}>
-            {localization?.recoverYourPassword}
+            {t("recoverYourPassword")}
           </div>
           <div className={commonStyles.recover_subtitle}>
-            {localization &&
-              localization["emailYouInstructionsToResetYourPassword."]}
+            {t("emailYouInstructionsToResetYourPassword.")}
           </div>
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <div>
@@ -83,7 +79,7 @@ const RecoverPasswordForm: React.FC<RecoverProps> = ({ onSubmit }) => {
                     errors.email ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.email}
+                  {t("email")}
                 </label>
               </div>
               {errors.email && (
@@ -91,7 +87,7 @@ const RecoverPasswordForm: React.FC<RecoverProps> = ({ onSubmit }) => {
               )}
             </div>
             <Button variant="White" type="submit">
-              {localization?.continueBtn}
+              {t("continueBtn")}
             </Button>
           </form>
         </div>

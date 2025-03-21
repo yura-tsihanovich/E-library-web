@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Redirect, Switch } from "react-router-dom";
 import { PrivateRoute } from "routing/components";
 import { InternalLayer, AppLayer } from "core/layers";
-import { Header, Spinner } from "components/common";
+import { Header, SideDrawer, Spinner } from "components/common";
 import HomeRouting, { routes as homeRoutes } from "modules/Home/routing";
 import UsersRouting, {
   routes as usersRoutes,
@@ -12,6 +12,7 @@ import FooterMobile from "../components/common/FooterMobile/FooterMobile";
 const PrivateRouting: React.FC = () => (
   <AppLayer>
     <Suspense fallback={<Spinner />}>
+      <SideDrawer />
       <Header />
       <Switch>
         <PrivateRoute path={usersRoutes.root} component={UsersRouting} />

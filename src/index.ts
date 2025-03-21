@@ -1,15 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Root from './Root'
-import * as serviceWorker from './serviceWorker'
-import 'antd/dist/antd.css'
+import React from "react";
+import ReactDOM from "react-dom";
+import Root from "./Root";
+import "antd/dist/antd.css";
 
 const render = (RootComponent: any) =>
-  ReactDOM.render(React.createElement(RootComponent), document.getElementById('root'))
+  ReactDOM.render(
+    React.createElement(RootComponent),
+    document.getElementById("root")
+  );
 
-render(Root)
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+render(Root);

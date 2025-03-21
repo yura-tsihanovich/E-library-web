@@ -5,7 +5,7 @@ import BackIcon from "../../../../assets/images/icons/goBackIcon.svg";
 import { useLocation, useHistory } from "react-router-dom";
 import Button from "../../../../components/common/Buttons/Button";
 import React from "react";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type LoginFormProps = {
   onSubmit: (values: any) => void;
@@ -15,9 +15,7 @@ const ChangePasswordForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const location = useLocation();
   const history = useHistory();
   const hash = new URLSearchParams(location.search).get("hash") || "";
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+  const { t } = useTranslation();
 
   const {
     register,
@@ -48,7 +46,7 @@ const ChangePasswordForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           <div />
         </div>
@@ -57,7 +55,7 @@ const ChangePasswordForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             <img src={logo} alt="logo" />
           </div>
           <div className={commonStyles.logo_name}>
-            {localization?.enterYourNewPassword}
+            {t("enterYourNewPassword")}
           </div>
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <div>
@@ -87,7 +85,7 @@ const ChangePasswordForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.password ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.password}
+                  {t("password")}
                 </label>
               </div>
               {errors.password && (
@@ -114,7 +112,7 @@ const ChangePasswordForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.confirmPassword ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.confirmPassword}
+                  {t("confirmPassword")}
                 </label>
               </div>
               {errors.confirmPassword && (
@@ -124,7 +122,7 @@ const ChangePasswordForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               )}
             </div>
             <Button variant="White" type="submit">
-              {localization?.changePassword}
+              {t("changePassword")}
             </Button>
           </form>
         </div>

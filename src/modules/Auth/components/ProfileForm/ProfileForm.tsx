@@ -8,7 +8,7 @@ import Button from "../../../../components/common/Buttons/Button";
 import BackIcon from "../../../../assets/images/icons/goBackIcon.svg";
 import { useHistory } from "react-router-dom";
 import LanguageModal from "../LanguageModal";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type LanguageType = {
   id: number;
@@ -45,6 +45,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
   handleUpload,
   photoId,
 }) => {
+  const { t } = useTranslation();
   const defaultLanguage = languages.find((lang) => lang.name === "English") || {
     id: 0,
     name: "Select Language",
@@ -72,10 +73,6 @@ const ProfileForm: React.FC<RecoverProps> = ({
 
   const history = useHistory();
   const profilePicture = watch("photo");
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   useEffect(() => {
     if (languages.length > 0) {
@@ -131,7 +128,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           {/*<div*/}
           {/*  onClick={() => history.push(homeRoutes.root)}*/}
@@ -146,9 +143,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
           {/*</div>*/}
         </div>
         <div className={commonStyles.centered}>
-          <div className={commonStyles.logo_name}>
-            {localization?.profileDetails}
-          </div>
+          <div className={commonStyles.logo_name}>{t("profileDetails")}</div>
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <div className="form-group">
               <div className="authUploadWrap">
@@ -182,7 +177,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
               </div>
             </div>
             <span className={commonStyles.uploadSubtitle}>
-              {localization?.profileDetails}
+              {t("profileDetails")}
             </span>
             <div style={{ marginTop: 15 }}>
               <div className={commonStyles.inputWrapper}>
@@ -206,7 +201,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
                           errors.userName ? commonStyles.errorLabel : ""
                         }`}
                       >
-                        {localization?.name}
+                        {t("name")}
                       </label>
                       {errors.userName && (
                         <p className={commonStyles.errorController}>
@@ -245,7 +240,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
                           errors.dateBirth ? commonStyles.errorLabel : ""
                         } ${field.value ? "has-value" : ""}`}
                       >
-                        {localization?.dateOfBirth}
+                        {t("dateOfBirth")}
                       </label>
                     </div>
                   )}
@@ -271,7 +266,7 @@ const ProfileForm: React.FC<RecoverProps> = ({
                         ))}
                       </select>
                       <label className={commonStyles.inputLabel}>
-                        {localization?.gender}
+                        {t("gender")}
                       </label>
                       {errors.gender && (
                         <p className={commonStyles.errorController}>
@@ -306,13 +301,13 @@ const ProfileForm: React.FC<RecoverProps> = ({
                     )}
                   />
                   <label className={commonStyles.inputLabel}>
-                    {localization?.appLanguage}
+                    {t("appLanguage")}
                   </label>
                 </div>
               )}
             </div>
             <Button variant="White" type="submit">
-              {localization?.continueBtn}
+              {t("continueBtn")}
             </Button>
           </form>
         </div>

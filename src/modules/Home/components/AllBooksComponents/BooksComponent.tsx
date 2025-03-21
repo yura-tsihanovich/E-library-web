@@ -16,6 +16,7 @@ import { getBookshelfById } from "../../slices/home";
 import { UserContext } from "../../../../core/contexts";
 import { useDispatch } from "react-redux";
 import { routes } from "../../routing";
+import { useTranslation } from "react-i18next";
 
 interface Author {
   name: string;
@@ -51,11 +52,9 @@ const BooksComponent: React.FC<HomeProps> = ({
   onLoadMore,
   hasMoreBooks,
 }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const value = useContext(UserContext);
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const { currentBookshelfBook } = useLazySelector(({ home }) => ({
     currentBookshelfBook: home.currentBookshelfBook,
@@ -103,7 +102,7 @@ const BooksComponent: React.FC<HomeProps> = ({
         className={commonStyles.backBtnRelativePage}
       >
         <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-        {localization?.backBtn}
+        {t("backBtn")}
       </div>
       <div className={styles.page_title}>
         {isLoading && !isLoadingMore ? (
@@ -184,7 +183,7 @@ const BooksComponent: React.FC<HomeProps> = ({
                     onClick={() => continueReadingBook?.(book.id)}
                     className={styles.startBtn}
                   >
-                    {localization?.continueReading}
+                    {t("continueReading")}
                   </div>
                 )}
               </div>
@@ -193,10 +192,10 @@ const BooksComponent: React.FC<HomeProps> = ({
       {hasMoreBooks && (
         <div className={styles.loadMoreBtn} onClick={onLoadMore}>
           {isLoadingMore ? (
-            localization?.loading
+            t("loading")
           ) : (
             <div style={{ display: "flex", alignItems: "center" }}>
-              {localization?.loadMoreBtn}
+              {t("loadMoreBtn")}
               <img style={{ marginLeft: 5 }} src={ArrowDown} alt="icon" />
             </div>
           )}

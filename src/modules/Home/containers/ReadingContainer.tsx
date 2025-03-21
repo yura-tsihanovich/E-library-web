@@ -192,7 +192,7 @@ const ReadingContainer: React.FC = () => {
   };
 
   useEffect(() => {
-    const handleLeave = () => {
+    return () => {
       if (!location.pathname.includes("reading")) {
         saveProgress();
         setFeaturePageFromServer(null);
@@ -200,23 +200,19 @@ const ReadingContainer: React.FC = () => {
         sessionStorage.removeItem("currentBookLanguage");
       }
     };
-
-    return handleLeave;
   }, [location.pathname, maxLoadPage]);
 
   return (
-    <div style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}>
-      <Reading
-        pagesContent={pagesContent}
-        totalPages={totalPages}
-        isLoading={isLoading}
-        onNext={handleNext}
-        onPrev={handlePrev}
-        featurePageFromServer={featurePageFromServer}
-        maxLoadPage={maxLoadPage}
-        setMaxLoadPage={setMaxLoadPage}
-      />
-    </div>
+    <Reading
+      pagesContent={pagesContent}
+      totalPages={totalPages}
+      isLoading={isLoading}
+      onNext={handleNext}
+      onPrev={handlePrev}
+      featurePageFromServer={featurePageFromServer}
+      maxLoadPage={maxLoadPage}
+      setMaxLoadPage={setMaxLoadPage}
+    />
   );
 };
 

@@ -7,18 +7,15 @@ import Social_2 from "../../../../assets/images/icons/twitter.svg";
 import Onboarding from "../../../../assets/images/Onboarding-img.png";
 import GoogleIcon from "../../../../assets/images/icons/google.png";
 import { Link } from "react-router-dom";
-import { useLazySelector } from "../../../../hooks";
 import useAuthSocial from "../../../../hooks/useAuthSocial";
 import { AppleOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 type LoginFormProps = {};
 
 const OnboardingForm: React.FC<LoginFormProps> = () => {
   const { loginViaSocial } = useAuthSocial();
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
+  const { t } = useTranslation();
 
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh" }}>
@@ -29,7 +26,7 @@ const OnboardingForm: React.FC<LoginFormProps> = () => {
             <img src={logo} alt="logo" />
           </div>
           <Button variant="White" to="/auth/registration">
-            {localization?.signUpWithEmail}
+            {t("signUpWithEmail")}
           </Button>
           <Button variant="Blue" onClick={() => loginViaSocial("google")}>
             <img
@@ -37,7 +34,7 @@ const OnboardingForm: React.FC<LoginFormProps> = () => {
               src={GoogleIcon}
               alt="icon"
             />
-            {localization?.ContinueWithGoogle}
+            {t("ContinueWithGoogle")}
           </Button>
           <div
             style={{
@@ -49,7 +46,7 @@ const OnboardingForm: React.FC<LoginFormProps> = () => {
           >
             <div className={styles.subtitle_line}></div>
             <div className={commonStyles.login_subtitle}>
-              {localization?.orContinueWith}
+              {t("orContinueWith")}
             </div>
             <div className={styles.subtitle_line}></div>
           </div>
@@ -86,10 +83,10 @@ const OnboardingForm: React.FC<LoginFormProps> = () => {
         </div>
         <div className={commonStyles.footerCentered}>
           <div className={commonStyles.login_subtitle}>
-            {localization?.alreadyHaveAnAccount}
+            {t("alreadyHaveAnAccount")}
           </div>
           <Button variant="Transparent" to="/auth/login">
-            {localization?.logInWithEmail}
+            {t("logInWithEmail")}
           </Button>
         </div>
       </div>

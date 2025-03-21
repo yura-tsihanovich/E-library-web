@@ -7,8 +7,10 @@ import { useHistory } from "react-router-dom";
 import BooksComponent from "../components/AllBooksComponents/BooksComponent";
 import { getLocalization } from "../../Auth/slices/auth";
 import { UserContext } from "../../../core/contexts";
+import { useTranslation } from "react-i18next";
 
 const SimilarBooksContainer: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const value = useContext(UserContext);
@@ -32,10 +34,6 @@ const SimilarBooksContainer: React.FC = () => {
       dispatch(getLocalization(value?.language?.isoCode2char));
     }
   }, [dispatch, value?.language?.isoCode2char]);
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const limit = 6;
 
@@ -93,7 +91,7 @@ const SimilarBooksContainer: React.FC = () => {
     <BooksComponent
       books={similarBooks?.result?.data}
       getBook={getBook}
-      title={localization?.titleSimilarBooks}
+      title={t("titleSimilarBooks")}
       onLoadMore={hasMoreBooks ? loadMoreBooks : undefined}
       isLoadingMore={loadingMore}
       hasMoreBooks={hasMoreBooks}

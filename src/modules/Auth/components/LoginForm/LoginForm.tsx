@@ -7,23 +7,21 @@ import BackIcon from "../../../../assets/images/icons/goBackIcon.svg";
 import { Link, useHistory } from "react-router-dom";
 import Button from "../../../../components/common/Buttons/Button";
 import React from "react";
-import { useLazySelector } from "../../../../hooks";
+import { useTranslation } from "react-i18next";
 
 type LoginFormProps = {
   onSubmit: (values: any) => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+  const { t } = useTranslation();
+
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const { result: localization } = useLazySelector(
-    ({ auth }) => auth.appLocalization || {}
-  );
 
   const onSubmitForm = (values: any) => {
     onSubmit(values);
@@ -45,7 +43,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
             className={commonStyles.backBtnRelative}
           >
             <img style={{ marginRight: 9 }} src={BackIcon} alt="Back arrow" />
-            {localization?.backBtn}
+            {t("backBtn")}
           </div>
           <div />
         </div>
@@ -53,9 +51,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           <div className={commonStyles.login_logo}>
             <img src={logo} alt="logo" />
           </div>
-          <div className={commonStyles.logo_name}>
-            {localization && localization["Log In"]}
-          </div>
+          <div className={commonStyles.logo_name}>{t("Log In")}</div>
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <div>
               <div className={commonStyles.inputWrapper}>
@@ -80,7 +76,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.email ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.email}
+                  {t("email")}
                 </label>
               </div>
               {errors.email && (
@@ -115,7 +111,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     errors.email ? commonStyles.errorLabel : ""
                   }`}
                 >
-                  {localization?.password}
+                  {t("password")}
                 </label>
               </div>
               {errors.password && (
@@ -123,7 +119,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               )}
             </div>
             <Button variant="White" type="submit">
-              {localization && localization["Log In"]}
+              {t("Log In")}
             </Button>
           </form>
         </div>
@@ -133,21 +129,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               className={commonStyles.login_subtitle}
               style={{ marginBottom: "15px" }}
             >
-              {localization?.DontHaveAnAccount}
+              {t("DontHaveAnAccount")}
               <Link
                 style={{ color: "#FFEA84", marginLeft: 8 }}
                 to="/auth/registration"
               >
-                {localization?.signUp}
+                {t("signUp")}
               </Link>
             </div>
             <div className={commonStyles.login_subtitle}>
-              {localization?.forgotYourPassword}
+              {t("forgotYourPassword")}
               <Link
                 style={{ color: "#FFEA84", marginLeft: 8 }}
                 to="/auth/recover_password"
               >
-                {localization?.recover}
+                {t("recover")}
               </Link>
             </div>
           </div>
