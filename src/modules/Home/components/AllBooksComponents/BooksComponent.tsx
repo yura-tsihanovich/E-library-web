@@ -132,9 +132,8 @@ const BooksComponent: React.FC<HomeProps> = ({
               </div>
             ))
           : books?.map((book: Book) => (
-              <div>
+              <div key={book.id}>
                 <div
-                  key={book.id}
                   className={styles.newBook}
                   onClick={() => getBook(book.id)}
                 >

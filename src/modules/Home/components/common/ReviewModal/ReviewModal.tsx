@@ -113,7 +113,10 @@ const ReviewModal: FC<ReviewModalProps> = ({
       <div style={{ textAlign: "center" }}>
         <Button
           variant="Brown"
-          onClick={handleReviewSubmit}
+          onClick={() => {
+            handleReviewSubmit();
+            setReviewText("");
+          }}
           style={{
             width: "100%",
             padding: "12px",

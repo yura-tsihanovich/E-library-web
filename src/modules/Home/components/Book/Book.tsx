@@ -82,6 +82,7 @@ type BookProps = {
   startRead: any;
   startListen: any;
   currentBookVersion: any;
+  reviewsRating?: string;
 };
 
 const Book: React.FC<BookProps> = ({
@@ -98,6 +99,7 @@ const Book: React.FC<BookProps> = ({
   startRead,
   currentBookVersion,
   startListen,
+  reviewsRating,
 }) => {
   const { t } = useTranslation();
   const [book, setBook] = useState<BookType | null>(null);
@@ -121,6 +123,10 @@ const Book: React.FC<BookProps> = ({
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
+
+  const hasUserAlreadyReviewed = reviews.length
+    ? reviews.some((review) => review?.user?.id === value?.id)
+    : false;
 
   useEffect(() => {
     if (value?.language?.isoCode2char) {
@@ -209,15 +215,6 @@ const Book: React.FC<BookProps> = ({
   const showModal = () => {
     setIsModalOpen(true);
   };
-
-  // useEffect(() => {
-  //   if (languages && languages.length > 0) {
-  //     const englishLanguage = languages.find((lang) => lang.name === "English");
-  //     if (englishLanguage) {
-  //       setSelectedLanguage(englishLanguage);
-  //     }
-  //   }
-  // }, [languages]);
 
   const formatFileSize = (bytesStr: string): string => {
     const bytesNum = Number(bytesStr);
@@ -592,12 +589,14 @@ const Book: React.FC<BookProps> = ({
                 {book?.rating !== undefined && (
                   <Rate
                     disabled
-                    value={Number(book.rating) > 0 ? Number(book.rating) : 0}
+                    value={
+                      Number(reviewsRating) > 0 ? Number(reviewsRating) : 0
+                    }
                     allowHalf
                   />
                 )}
                 <div className={styles.rating_count}>
-                  {book?.rating ? Number(book.rating).toFixed(1) : "N/A"}
+                  {reviewsRating ? Number(reviewsRating).toFixed(1) : ""}
                 </div>
                 <div>
                   ({reviews?.length} {t("reviews").toLowerCase()})
@@ -630,6 +629,7 @@ const Book: React.FC<BookProps> = ({
                   setIsReviewModalOpen(true);
                 }}
                 variant="Transparent"
+                disabled={hasUserAlreadyReviewed}
               >
                 {t("writeReviewBtn")}
                 <img

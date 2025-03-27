@@ -193,6 +193,7 @@ const BookContainer: React.FC = () => {
       addToBookShelf={addToBookShelf}
       deleteFromBookShelf={deleteFromBookShelf}
       reviews={reviews?.result?.data}
+      reviewsRating={reviews?.result?.rating}
       reviewSubmit={reviewSubmit}
       similarBooks={similarBooks?.result?.data}
       deleteReview={deleteReview}
